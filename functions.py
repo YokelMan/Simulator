@@ -1,17 +1,17 @@
 # this file is for the irrelevant functions, so that main.py can be readable.
 """
-Current updates to be done:
+Current updates to be done (sorted in order of importance):
 NEED TO CREATE A STORYLINE.
 Need to see what should be done for new players.
+Can only save one game file for now, need to be able to save multiple files.
 Create a function to load game data.
 Game data could probably be in JSON, not sure yet.
 Create a tutorial for the game.
 """
 import os
 from datetime import datetime
-from dateutil import tz
 
-saveGameMetaData = [["sample 1", 1], ["sample 2", 2]] # template: title, saveTimeInEpoch
+saveGameMetaData = ["sample 1", 1] # template: title, saveTimeInEpoch
 saveGameData = [] # template: stuff
 
 def introScene():
@@ -40,21 +40,35 @@ def start():
     elif (choice == 1):
         if len(saveGameMetaData):
             os.system("cls")
-            print("Which save game do you want to load?")
-            for x in saveGameMetaData:
-                date = datetime.fromtimestamp(x[1]).strftime('%d-%m-%Y')
-                time = datetime.fromtimestamp(x[1]).strftime('%H:%M:%S')
-                print(f"Title: {x[0]}\nSave date: {date}\nSave time: {time}\n")
-            print("(Date format is dd/mm/yyyy and time format is hour/minute/second. Time is in UTC.)")
-            userInput = input("Enter the title of your save game to load it: ")
-            return userInput
+            date = datetime.fromtimestamp(saveGameMetaData[1]).strftime('%d-%m-%Y')
+            time = datetime.fromtimestamp(saveGameMetaData[1]).strftime('%H:%M:%S')
+            print(f"Title: {saveGameMetaData[0]}\nSave date: {date}\nSave time: {time}\n")
+            loader()
+            input("\nThe game has loaded. Enter any key to continue...\n")
+            pass # <- some function to start the game
         else:
             print("You don't have any save game!")
             input("Enter any key to continue...\n")
             choice = 2
             os.system("cls")
     if (choice == 2):
-        print("Hey there! This is a game about training to become the best god in the Universe!")
+        print("Hey there! This is a game about training to become the best God in the Universe!")
         print("You will have to fight enemies, powerful bosses and level up to become a true God.")
-        input("Ready to start? Enter any key to continue.\n")
+        input("Ready to start? Enter any key to continue...\n")
         introScene()
+        pass # <- some function to start the game
+
+# to save the game
+def saver(data = None):
+    response = input("Beware! Saving will overwrite your current save file! Do you want to proceed? Enter Yes or No: ").lower()
+    while response not in {"yes", "no"}:
+        response = input("Please enter yes or no: ").lower()
+    saveGameMetaData[0] = input("Enter the title for your save: ")
+    time = datetime.now()
+    timeArr = [time.strftime("%Y"), time.strftime("%m"), time.strftime("%d"), time.strftime("%H"), time.strftime("%M"), time.strftime("%S")]
+    epochTime = int(datetime(int(timeArr[0]), int(timeArr[1]), int(timeArr[2]), int(timeArr[3]), int(timeArr[4]), int(timeArr[5])).timestamp())
+    saveGameMetaData[1] = epochTime
+
+# to load the game
+def loader():
+    pass

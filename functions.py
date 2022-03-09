@@ -1,5 +1,12 @@
 # this file is for the irrelevant functions, so that main.py can be readable.
-
+"""
+Current updates to be done:
+NEED TO CREATE A STORYLINE.
+Need to see what should be done for new players.
+Create a function to load game data.
+Game data could probably be in JSON, not sure yet.
+Create a tutorial for the game.
+"""
 import os
 from datetime import datetime
 from dateutil import tz

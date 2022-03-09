@@ -42,8 +42,8 @@ def start():
             os.system("cls")
             print("Which save game do you want to load?")
             for x in saveGameMetaData:
-                date = datetime.utcfromtimestamp(x[1]).strftime('%d-%m-%Y')
-                time = datetime.utcfromtimestamp(x[1]).strftime('%H:%M:%S')
+                date = datetime.fromtimestamp(x[1]).strftime('%d-%m-%Y')
+                time = datetime.fromtimestamp(x[1]).strftime('%H:%M:%S')
                 print(f"Title: {x[0]}\nSave date: {date}\nSave time: {time}\n")
             print("(Date format is dd/mm/yyyy and time format is hour/minute/second. Time is in UTC.)")
             userInput = input("Enter the title of your save game to load it: ")

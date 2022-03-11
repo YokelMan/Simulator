@@ -3,11 +3,11 @@
 
 import os
 from datetime import datetime
-import functions
+from functions import start
 
 def game(choice = None):
     # stuff will be added later, need to check if title of save game matches or not
     pass
 
 if __name__ == "__main__":
-    functions.start()
+    start()

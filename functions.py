@@ -5,13 +5,14 @@ NEED TO CREATE A STORYLINE.
 Need to see what should be done for new players.
 Can only save one game file for now, need to be able to save multiple files.
 Create a function to load game data.
-Game data could probably be in JSON, not sure yet.
+Game data could probably be in JSON, not sure yet. (right now i'm doing it in a text file, literally anyone can change it)
 Create a tutorial for the game.
 """
 import os
 from datetime import datetime
+import time
 
-saveGameMetaData = ["sample 1", 1] # template: title, saveTimeInEpoch
+saveGameMetaData = ["", ""] # template: title, saveTimeInEpoch
 saveGameData = [] # template: stuff
 
 def introScene():
@@ -60,15 +61,26 @@ def start():
 
 # to save the game
 def saver(data = None):
-    response = input("Beware! Saving will overwrite your current save file! Do you want to proceed? Enter Yes or No: ").lower()
+    response = input("Beware! Saving will overwrite your current save file! Do you want to proceed? Enter yes or no: ").lower()
     while response not in {"yes", "no"}:
         response = input("Please enter yes or no: ").lower()
-    saveGameMetaData[0] = input("Enter the title for your save: ")
-    time = datetime.now()
-    timeArr = [time.strftime("%Y"), time.strftime("%m"), time.strftime("%d"), time.strftime("%H"), time.strftime("%M"), time.strftime("%S")]
-    epochTime = int(datetime(int(timeArr[0]), int(timeArr[1]), int(timeArr[2]), int(timeArr[3]), int(timeArr[4]), int(timeArr[5])).timestamp())
-    saveGameMetaData[1] = epochTime
+    if response == "yes":
+        saveGameMetaData[0] = input("Enter the title for your save: ")
+        saveGameMetaData[1] = int(time.time())
+        # nothing related to saveGameData is added for now, as there are no items defined
+        file = open("data.txt", "w")
+        file.write(f"{saveGameMetaData[0]}\n")
+        file.write(f"{saveGameMetaData[1]}\n")
+        file.close()
+    else:
+        pass # need to see what to do if player says no
 
 # to load the game
 def loader():
-    pass
+    file = open("data.txt", "r")
+    arr = file.read().split("\n")
+    arr.pop()
+    saveGameMetaData[0] = arr[0]
+    saveGameMetaData[1] = int(arr[1])
+    file.close()
+# empty line at the end for no particular reason ¯\_(ツ)_/¯

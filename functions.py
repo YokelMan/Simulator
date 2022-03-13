@@ -56,7 +56,7 @@ def start():
             os.system("cls")
             date = datetime.fromtimestamp(saveGameMetaData["epochTime"]).strftime('%d/%m/%Y')
             time = datetime.fromtimestamp(saveGameMetaData["epochTime"]).strftime('%H:%M:%S')
-            print(f"Title: " + {saveGameMetaData["title"]} + "\nSave date: {date}\nSave time: {time}")
+            print("Title: " + saveGameMetaData["title"] + "\nSave date: " + date + "\nSave time: " + time)
             print("(Date format is dd/mm/yyyy, time format is hour/minute/second. Local time is shown.)")
             loader()
             input("\nThe game has loaded. Enter any key to continue...\n")
@@ -76,7 +76,7 @@ def start():
 # to save the game
 def saver(data = None):
     os.system("cls")
-    response = input("Beware! Saving will overwrite your current save file! Do you want to proceed? Enter yes or no: ").lower() if saveGameMetaData["epochTime"] else input("Do you want to save? Enter yes or no: ").lower()
+    response = input("Beware! Saving will overwrite your current save file! Do you want to proceed? Enter yes or no: ").lower() if saveGameMetaData["epochTime"] else "yes"
     while response not in {"yes", "no"}:
         response = input("Please enter yes or no: ").lower()
     if response == "yes":
@@ -90,14 +90,17 @@ def saver(data = None):
         file = open("data.json", "w")
         file.write(json.dumps(saveGameData, indent = 4))
         file.close()
+
 # to load the game
 def loader():
-    # loading meta data
-    file = open("metaData.json", "r")
-    saveGameMetaData = json.load(file)
-    file.close()
-    # loading game data
-    file = open("data.json", "r")
-    saveGameData = json.load(file)
-    file.close()
+        # loading meta data
+        file = open("metaData.json", "r")
+        global saveGameMetaData
+        saveGameMetaData = json.load(file)
+        file.close()
+        # loading game data
+        file = open("data.json", "r")
+        global saveGameData
+        saveGameData = json.load(file)
+        file.close()
 # empty line at the end for no particular reason ¯\_(ツ)_/¯
